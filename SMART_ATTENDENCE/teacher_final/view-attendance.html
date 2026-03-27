@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>View Attendance | Smart Attendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="common layout.css" />
+  <link rel="stylesheet" href="view-attendance.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="menu-toggle"><span>&#9776;</span></div>
+      <div class="logo">SMART ATTENDANCE</div>
+      <div class="page-title">Management Dashboard</div>
+    </div>
+
+    <div class="header-right">
+      <div id="currentDate"></div>
+      <div class="notification">🔔</div>
+      <div class="user">👤 Teacher Admin</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li class="section">Main Menu</li>
+        <li>
+          <a href="T_dashboard.html">
+            <span class="icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="mark-attendance.html">
+            <span class="icon">🖋️</span>
+            <span>Mark Attendance</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="view-attendance.html">
+            <span class="icon">📅</span>
+            <span>View Attendance</span>
+          </a>
+        </li>
+        <li>
+          <a href="manage students.html">
+            <span class="icon">👥</span>
+            <span>Manage Students</span>
+          </a>
+        </li>
+        <li>
+          <a href="assignments.html">
+            <span class="icon">📝</span>
+            <span>Assignments</span>
+          </a>
+        </li>
+        <li>
+          <a href="student summary.html">
+            <span class="icon">📝</span>
+            <span>Student Summary</span>
+          </a>
+        </li>
+        <li class="logout">
+          <a href="../logout.html" id="logoutBtn">
+            <span class="icon">🚪</span>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="content-box">
+        <h2 class="page-title">Attendance Reports</h2>
+
+        <!-- FILTER + EXPORT ROW -->
+        <div class="filter-row">
+          <div class="filters">
+            <div style="display: flex; flex-direction: column; gap: 5px; flex: 1;">
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Subject</label>
+              <select id="subjectFilter">
+                <option value="all">All Subjects</option>
+              </select>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px; flex: 1;">
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">From Date</label>
+              <input type="date" id="startDate" />
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px; flex: 1;">
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">To Date</label>
+              <input type="date" id="endDate" />
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px; flex: 2; min-width: 200px;">
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Search Records</label>
+              <input type="text" id="searchInput" placeholder="Search by name, roll or class..." />
+            </div>
+          </div>
+
+          <div class="export-buttons">
+            <button id="exportCSV">Export CSV</button>
+            <button id="exportPDF">Download PDF</button>
+          </div>
+        </div>
+
+        <h3 class="summary-title">Daily Attendance Records</h3>
+        <div class="table-wrapper">
+          <table id="attendanceTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Subject</th>
+                <th>Class</th>
+                <th>Roll</th>
+                <th>Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- JS-populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="summary-title" style="margin-top: 50px;">Aggregated Student Performance</h3>
+        <div class="table-wrapper">
+          <table id="summaryTable">
+            <thead>
+              <tr>
+                <th>Roll No</th>
+                <th>Student Name</th>
+                <th>Sessions</th>
+                <th>Present</th>
+                <th>Percentage %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- JS-populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../api.js"></script>
+  <script src="view-attendance.js"></script>
+  <script src="common layout.js"></script>
+</body>
+</html>

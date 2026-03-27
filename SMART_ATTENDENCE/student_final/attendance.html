@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Attendance | View Attendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="attendance.css" />
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="left-header">
+      <div class="menu-icon"><span>&#9776;</span></div>
+      <h2><span class="red">SMART ATTENDANCE</span></h2>
+    </div>
+
+    <div class="right-header">
+      <span class="welcome">Welcome, <strong id="welcomeName">Student</strong></span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li class="section">Main Menu</li>
+        <li><a href="dashboard.html"><span class="icon">📊</span> <span>Dashboard</span></a></li>
+        <li><a href="profile.html"><span class="icon">👤</span> <span>My Profile</span></a></li>
+        <li class="active"><a href="attendance.html"><span class="icon">📅</span> <span>Attendance</span></a></li>
+        <li><a href="assignments.html"><span class="icon">📝</span> <span>Assignments</span></a></li>
+        <li class="logout"><a href="../logout.html"><span class="icon">🚪</span> <span>Logout</span></a></li>
+      </ul>
+    </aside>
+
+    <main class="content fade-in">
+      <div class="content-header">
+        <h2 class="page-title">Attendance History</h2>
+        <div class="breadcrumb">Portal / My Attendance</div>
+      </div>
+
+      <!-- STATS GRID -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">📚</div>
+          <div class="stat-info">
+            <span class="label">Total Classes</span>
+            <div class="value" id="totalClassesCount">0</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">✅</div>
+          <div class="stat-info">
+            <span class="label">Present Days</span>
+            <div class="value" id="presentDaysCount">0</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red">❌</div>
+          <div class="stat-info">
+            <span class="label">Absent Days</span>
+            <div class="value" id="absentDaysCount">0</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">📊</div>
+          <div class="stat-info">
+            <span class="label">Attendance %</span>
+            <div class="value" id="attendancePercentage">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="subjectSearch" placeholder="Filter by subject name..." />
+        </div>
+        <div class="student-info-pill" id="studentMetaPill">
+          Loading academic details...
+        </div>
+      </div>
+
+      <!-- TABLE CONTAINER -->
+      <div class="card table-container">
+        <div class="table-header">
+          <h3>Detailed Session Records</h3>
+          <div class="legend">
+            <span class="legend-item"><span class="dot present"></span> Present</span>
+            <span class="legend-item"><span class="dot absent"></span> Absent</span>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table id="attendanceTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Day</th>
+                <th>Sub 1</th>
+                <th>Sub 2</th>
+                <th>Sub 3</th>
+                <th>Sub 4</th>
+                <th>Sub 5</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceTableBody">
+              <tr class="empty-state">
+                <td colspan="7">Loading your attendance records...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../api.js"></script>
+  <script src="script2.js"></script>
+  <script src="attendance.js"></script>
+</body>
+</html>

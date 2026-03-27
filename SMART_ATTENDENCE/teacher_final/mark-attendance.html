@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mark Attendance | Smart Attendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="common layout.css" />
+  <link rel="stylesheet" href="mark-attendance.css" />
+</head>
+<body>
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="menu-toggle"><span>&#9776;</span></div>
+      <div class="logo">SMART ATTENDANCE</div>
+      <div class="page-title">Management Dashboard</div>
+    </div>
+
+    <div class="header-right">
+      <div id="currentDate"></div>
+      <div class="notification">🔔</div>
+      <div class="user">👤 Teacher Admin</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li class="section">Main Menu</li>
+        <li>
+          <a href="T_dashboard.html">
+            <span class="icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="mark-attendance.html">
+            <span class="icon">🖋️</span>
+            <span>Mark Attendance</span>
+          </a>
+        </li>
+        <li>
+          <a href="view-attendance.html">
+            <span class="icon">📅</span>
+            <span>View Attendance</span>
+          </a>
+        </li>
+        <li>
+          <a href="manage students.html">
+            <span class="icon">👥</span>
+            <span>Manage Students</span>
+          </a>
+        </li>
+        <li>
+          <a href="assignments.html">
+            <span class="icon">📝</span>
+            <span>Assignments</span>
+          </a>
+        </li>
+        <li>
+          <a href="student summary.html">
+            <span class="icon">📝</span>
+            <span>Student Summary</span>
+          </a>
+        </li>
+        <li class="logout">
+          <a href="../logout.html" id="logoutBtn">
+            <span class="icon">🚪</span>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="content-box">
+        <h2 class="page-title">Mark Faculty Attendance</h2>
+
+        <!-- FILTER BAR -->
+        <div class="filter-bar">
+          <div style="display: flex; flex-direction: column; gap: 5px; flex: 1;">
+            <label style="font-size: 12px; font-weight: 700; color: var(--text-muted);">Select Class</label>
+            <select id="classSelect">
+              <option value="CSE-A">CSE-A</option>
+              <option value="CSE-B">CSE-B</option>
+              <option value="CSE-C">CSE-C</option>
+            </select>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 5px; flex: 1;">
+            <label style="font-size: 12px; font-weight: 700; color: var(--text-muted);">Select Subject</label>
+            <select id="subjectSelect">
+              <option value="English">English</option>
+              <option value="Math">Math</option>
+              <option value="Physics">Physics</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="Biology">Biology</option>
+              <option value="Programming">Programming</option>
+            </select>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 5px; flex: 1;">
+            <label style="font-size: 12px; font-weight: 700; color: var(--text-muted);">Select Date</label>
+            <input type="date" id="attendanceDate" />
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button id="markAllPresent">Mark All Present</button>
+            <button id="markAllAbsent">Mark All Absent</button>
+          </div>
+        </div>
+
+        <!-- STUDENT TABLE -->
+        <div class="table-wrapper">
+          <table id="studentTable">
+            <thead>
+              <tr>
+                <th style="width: 150px;">Roll No</th>
+                <th>Student Name</th>
+                <th style="width: 150px;">Class</th>
+                <th style="width: 250px;">Attendance Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- JS-populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SUMMARY BAR -->
+        <div class="summary-bar">
+          <div>Present : <span id="presentCount">0</span></div>
+          <div style="border-left: 2px solid #ddd; padding-left: 30px;">Absent : <span id="absentCount">0</span></div>
+          <div style="border-left: 2px solid #ddd; padding-left: 30px;">Percentage : <span id="percentage">0%</span></div>
+        </div>
+
+        <!-- SAVE BUTTON -->
+        <div class="save-section">
+          <button id="saveBtn">Submit & Save Attendance</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../api.js"></script>
+  <script src="mark-attendance.js"></script>
+  <script src="common layout.js"></script>
+</body>
+</html>

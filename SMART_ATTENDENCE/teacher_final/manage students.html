@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manage Students | Smart Attendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="common layout.css" />
+  <link rel="stylesheet" href="manage students.css" />
+</head>
+<body>
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="menu-toggle"><span>&#9776;</span></div>
+      <div class="logo">SMART ATTENDANCE</div>
+      <div class="page-title">Students Registry</div>
+    </div>
+
+    <div class="header-right">
+      <div id="currentDate"></div>
+      <div class="notification">🔔</div>
+      <div class="user">👤 Teacher Admin</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li class="section">Main Menu</li>
+        <li>
+          <a href="T_dashboard.html">
+            <span class="icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="mark-attendance.html">
+            <span class="icon">🖋️</span>
+            <span>Mark Attendance</span>
+          </a>
+        </li>
+        <li>
+          <a href="view-attendance.html">
+            <span class="icon">📅</span>
+            <span>View Attendance</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="manage students.html">
+            <span class="icon">👥</span>
+            <span>Manage Students</span>
+          </a>
+        </li>
+        <li>
+          <a href="assignments.html">
+            <span class="icon">📝</span>
+            <span>Assignments</span>
+          </a>
+        </li>
+        <li>
+          <a href="student summary.html">
+            <span class="icon">📝</span>
+            <span>Student Summary</span>
+          </a>
+        </li>
+        <li class="logout">
+          <a href="../logout.html" id="logoutBtn">
+            <span class="icon">🚪</span>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="content-box">
+        <h2 class="page-title">Manage Student Records</h2>
+
+        <!-- SUMMARY STATS -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-icon stat-blue">👥</div>
+            <div class="stat-info">
+              <h4>Total Students</h4>
+              <div class="value" id="totalCount">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-green">🏫</div>
+            <div class="stat-info">
+              <h4>Active Classes</h4>
+              <div class="value" id="classCount">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-purple">📈</div>
+            <div class="stat-info">
+              <h4>Current Session</h4>
+              <div class="value">2026-27</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+          <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search by name, roll, or class..." />
+          </div>
+          <button class="add-btn" id="openDrawerBtn">
+            <span>+</span> Add New Student
+          </button>
+        </div>
+
+        <!-- STUDENT LIST TABLE -->
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Student Directory</h3>
+            <div class="import-zone">
+              <span>Bulk:</span>
+              <input type="file" id="csvFile" accept=".csv" />
+            </div>
+          </div>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Student Identity</th>
+                  <th>Department</th>
+                  <th>Academic Details</th>
+                  <th>Attendance Status</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody">
+                <!-- Data injected by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SIDE DRAWER FOR ADD/EDIT -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="drawer" id="studentDrawer">
+    <div class="drawer-header">
+      <h3 id="formTitle">Register Student</h3>
+      <button class="close-drawer" id="closeDrawerBtn">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <form id="studentForm">
+        <div class="photo-uploader">
+          <img id="photoPreview" class="photo-preview" src="../images/placeholder.png" alt="Preview" />
+          <div style="flex: 1;">
+            <label style="display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px;">PROFILE IMAGE</label>
+            <input type="file" id="photo" accept="image/*" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>ROLL NUMBER *</label>
+          <input type="number" id="roll" placeholder="Example: 101" required />
+        </div>
+        <div class="form-group">
+          <label>FULL NAME *</label>
+          <input type="text" id="name" placeholder="Example: John Doe" required />
+        </div>
+        <div class="form-group">
+          <label>EMAIL ADDRESS</label>
+          <input type="email" id="email" placeholder="john@university.edu" />
+        </div>
+        <div class="form-group">
+          <label>ACCOUNT PASSWORD</label>
+          <input type="password" id="password" placeholder="Min 6 characters" />
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label>COURSE / DEPT</label>
+            <input type="text" id="course" placeholder="CSE / IT" />
+          </div>
+          <div class="form-group">
+            <label>CLASS NAME</label>
+            <input type="text" id="class" placeholder="CSE-A" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label>YEAR</label>
+            <input type="number" id="year" placeholder="1...4" />
+          </div>
+          <div class="form-group">
+            <label>SEMESTER</label>
+            <input type="number" id="semester" placeholder="1...8" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>CONTACT NUMBER</label>
+          <input type="text" id="phone" placeholder="+1234567890" />
+        </div>
+
+        <div class="form-group">
+          <label>PERMANENT ADDRESS</label>
+          <textarea id="address" placeholder="Enter complete address details..."></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="drawer-footer">
+      <button type="button" id="resetBtn">Reset</button>
+      <button type="submit" form="studentForm" id="saveBtn">Save Details</button>
+    </div>
+  </div>
+
+  <script src="../api.js"></script>
+  <script src="manage students.js"></script>
+  <script src="common layout.js"></script>
+</body>
+</html>

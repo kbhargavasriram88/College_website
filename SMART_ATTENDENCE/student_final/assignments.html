@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Assignments | Smart Attendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="assignments.css" />
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="left-header">
+      <div class="menu-icon"><span>&#9776;</span></div>
+      <h2><span class="red">SMART ATTENDANCE</span></h2>
+    </div>
+    <div class="right-header">
+      <span class="welcome">Welcome, <strong id="welcomeName">Student</strong></span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li class="section">Main Menu</li>
+        <li><a href="dashboard.html"><span class="icon">📊</span> <span>Dashboard</span></a></li>
+        <li><a href="profile.html"><span class="icon">👤</span> <span>My Profile</span></a></li>
+        <li><a href="attendance.html"><span class="icon">📅</span> <span>Attendance</span></a></li>
+        <li class="active"><a href="assignments.html"><span class="icon">📝</span> <span>Assignments</span></a></li>
+        <li class="logout"><a href="../logout.html"><span class="icon">🚪</span> <span>Logout</span></a></li>
+      </ul>
+    </aside>
+
+    <main class="content fade-in">
+      <div class="page-header">
+        <h2 class="page-title">My Assignments</h2>
+        <div class="student-stats">
+          <div class="stat-item">
+            <span class="stat-label">Tasks to Complete</span>
+            <span id="pendingCount" class="stat-value">--</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="assignments-container">
+        <section class="assignment-section">
+          <h3>Active Assignments</h3>
+          <div id="activeAssignments" class="assignments-list">
+            <!-- Loaded via JS -->
+          </div>
+        </section>
+
+        <section class="assignment-section">
+          <h3>Your Submissions</h3>
+          <div id="mySubmissions" class="submissions-list">
+            <!-- Loaded via JS -->
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Submit Modal -->
+  <div id="submitModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeSubmit">&times;</span>
+      <h3>Submit Assignment</h3>
+      <p id="submitAassignTitle" style="font-weight: 600; margin-bottom: 1rem;"></p>
+      <form id="submissionForm">
+        <input type="hidden" id="submitAssignId" />
+        <div class="form-group" style="margin-bottom: 1.2rem;">
+          <label style="display: block; margin-bottom: 0.5rem;">Submission Content (Link/Text)</label>
+          <textarea id="subContent" rows="6" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
+        </div>
+        <button type="submit" class="primary-btn" style="width: 100%;">Submit Assignment</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="../api.js"></script>
+  <script src="assignments.js"></script>
+  <script src="script2.js"></script> <!-- For basic layout logic -->
+</body>
+</html>

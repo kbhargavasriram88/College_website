@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Teacher Dashboard | Smart Attendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="common layout.css" />
+  <link rel="stylesheet" href="T_dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="menu-toggle"><span>&#9776;</span></div>
+      <div class="logo">SMART ATTENDANCE</div>
+      <div class="page-title">Management Dashboard</div>
+    </div>
+
+    <div class="header-right">
+      <div id="currentDate"></div>
+      <div class="notification">🔔</div>
+      <div class="user">👤 Teacher Admin</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li class="active">
+          <a href="T_dashboard.html">
+            <span class="icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="mark-attendance.html">
+            <span class="icon">🖋️</span>
+            <span>Mark Attendance</span>
+          </a>
+        </li>
+        <li>
+          <a href="view-attendance.html">
+            <span class="icon">📅</span>
+            <span>View Attendance</span>
+          </a>
+        </li>
+        <li>
+          <a href="manage students.html">
+            <span class="icon">👥</span>
+            <span>Manage Students</span>
+          </a>
+        </li>
+        <li>
+          <a href="assignments.html">
+            <span class="icon">📝</span>
+            <span>Assignments</span>
+          </a>
+        </li>
+        <li>
+          <a href="student summary.html">
+            <span class="icon">📝</span>
+            <span>Student Summary</span>
+          </a>
+        </li>
+        <li class="logout">
+          <a href="../logout.html" id="logoutBtn">
+            <span class="icon">🚪</span>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="content-box">
+        <div class="dashboard-header">
+          <h2>Dashboard Overview</h2>
+          <p>Real-time analytics and attendance tracking</p>
+        </div>
+
+        <!-- ================= SUMMARY CARDS ================= -->
+        <section class="summary-cards">
+          <div class="card stat-card blue">
+            <div class="card-icon">📚</div>
+            <div class="card-info">
+              <h4>Total Classes</h4>
+              <p id="totalClasses">--</p>
+            </div>
+          </div>
+
+          <div class="card stat-card purple">
+            <div class="card-icon">👥</div>
+            <div class="card-info">
+              <h4>Total Students</h4>
+              <p id="totalStudents">--</p>
+            </div>
+          </div>
+
+          <div class="card stat-card green">
+            <div class="card-icon">📈</div>
+            <div class="card-info">
+              <h4>Avg. Attendance</h4>
+              <p id="avgAttendance">--%</p>
+            </div>
+          </div>
+
+          <div class="card stat-card red">
+            <div class="card-icon">⚠</div>
+            <div class="card-info">
+              <h4>Low Attendance</h4>
+              <p id="lowAttendance">--</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= CHART & ACTIVITY ================= -->
+        <div class="dashboard-grid">
+          <section class="card chart-section">
+            <div class="section-header">
+              <h3>Attendance Trend</h3>
+              <p>Performance over the last sessions</p>
+            </div>
+            <div class="chart-container">
+              <canvas id="attendanceChart"></canvas>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../api.js"></script>
+  <script src="T_dashboard.js"></script>
+  <script src="common layout.js"></script>
+</body>
+</html>

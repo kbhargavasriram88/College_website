@@ -1,0 +1,77 @@
+/* =======================
+   STUDENT SUMMARY
+   ======================= */
+
+.container h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 35px;
+  color: var(--text-main);
+}
+
+/* TABLE STYLES */
+.table-wrapper {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--glass-shadow);
+  border: 1px solid #f1f5f9;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #f8fafc;
+  padding: 18px 25px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+td {
+  padding: 18px 25px;
+  font-size: 15px;
+  border-bottom: 1px solid #f1f5f9;
+  color: var(--text-main);
+}
+
+tr:hover td {
+  background: #fbfcfe;
+}
+
+/* PROGRESS BAR UTILITY */
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+/* PERCENTAGE TEXT */
+.pct-text {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.pct-low { color: var(--danger); }
+.pct-good { color: var(--success); }
+
+@media (max-width: 768px) {
+  th, td { padding: 12px 15px; font-size: 13px; }
+}

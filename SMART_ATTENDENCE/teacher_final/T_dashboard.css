@@ -1,0 +1,109 @@
+/* =======================
+   DASHBOARD SPECIFIC
+   ======================= */
+
+.dashboard-header {
+  margin-bottom: 35px;
+}
+
+.dashboard-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 5px;
+}
+
+.dashboard-header p {
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* ================= SUMMARY CARDS ================= */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 25px;
+  transition: var(--transition);
+  border: none;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+/* Variants */
+.stat-card.blue .card-icon { background: hsl(224, 76%, 95%); color: hsl(224, 76%, 48%); }
+.stat-card.purple .card-icon { background: hsl(245, 58%, 95%); color: hsl(245, 58%, 51%); }
+.stat-card.green .card-icon { background: hsl(142, 71%, 95%); color: var(--success); }
+.stat-card.red .card-icon { background: hsl(0, 84%, 95%); color: var(--danger); }
+
+.card-info h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-info p {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+/* ================= DASHBOARD GRID ================= */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+.chart-section {
+  padding: 30px;
+}
+
+.section-header {
+  margin-bottom: 25px;
+}
+
+.section-header h3 {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.section-header p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.chart-container {
+  height: 300px;
+  position: relative;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 600px) {
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+}

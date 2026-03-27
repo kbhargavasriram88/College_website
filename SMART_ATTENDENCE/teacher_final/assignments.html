@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Assignments | Smart Attendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="common layout.css" />
+  <link rel="stylesheet" href="assignments.css" />
+</head>
+<body>
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="menu-toggle"><span>&#9776;</span></div>
+      <div class="logo">SMART ATTENDANCE</div>
+      <div class="page-title">Assignment Management</div>
+    </div>
+
+    <div class="header-right">
+      <div id="currentDate"></div>
+      <div class="notification">🔔</div>
+      <div class="user">👤 Teacher Admin</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li>
+          <a href="T_dashboard.html">
+            <span class="icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="mark-attendance.html">
+            <span class="icon">🖋️</span>
+            <span>Mark Attendance</span>
+          </a>
+        </li>
+        <li>
+          <a href="view-attendance.html">
+            <span class="icon">📅</span>
+            <span>View Attendance</span>
+          </a>
+        </li>
+        <li>
+          <a href="manage students.html">
+            <span class="icon">👥</span>
+            <span>Manage Students</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="assignments.html">
+            <span class="icon">📝</span>
+            <span>Assignments</span>
+          </a>
+        </li>
+        <li>
+          <a href="student summary.html">
+            <span class="icon">📝</span>
+            <span>Student Summary</span>
+          </a>
+        </li>
+        <li class="logout">
+          <a href="../logout.html" id="logoutBtn">
+            <span class="icon">🚪</span>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="content-box">
+        <div class="dashboard-header">
+          <h2>Assignments</h2>
+          <button id="addAssignmentBtn" class="btn-primary">Add New Assignment</button>
+        </div>
+
+        <!-- ================= SUMMARY CARDS ================= -->
+        <section class="summary-cards">
+          <div class="card stat-card blue">
+            <div class="card-icon">📚</div>
+            <div class="card-info">
+              <h4>Total Assignments</h4>
+              <p id="totalAssignmentsCount">--</p>
+            </div>
+          </div>
+
+          <div class="card stat-card purple">
+            <div class="card-icon">📁</div>
+            <div class="card-info">
+              <h4>Total Submissions</h4>
+              <p id="totalSubmissionsCount">--</p>
+            </div>
+          </div>
+
+          <div class="card stat-card orange">
+            <div class="card-icon">⏳</div>
+            <div class="card-info">
+              <h4>Pending Grading</h4>
+              <p id="pendingGradingCount">--</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="assignments-filters">
+           <div class="filter-group">
+             <label for="classFilter">Class</label>
+             <select id="classFilter">
+               <option value="">All Classes</option>
+             </select>
+           </div>
+           <div class="filter-group">
+             <label for="subjectFilter">Subject</label>
+             <select id="subjectFilter">
+               <option value="">All Subjects</option>
+             </select>
+           </div>
+        </div>
+
+        <section class="assignments-list-section">
+          <div id="assignmentsGrid" class="assignments-grid">
+            <!-- Cards will be loaded here -->
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Assignment Modal -->
+  <div id="assignmentModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Create New Assignment</h3>
+      <form id="assignmentForm">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="assignTitle" required />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="assignDesc" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" id="assignSubject" required />
+        </div>
+        <div class="form-group">
+          <label>Class</label>
+          <input type="text" id="assignClass" required />
+        </div>
+        <div class="form-group">
+          <label>Deadline</label>
+          <input type="date" id="assignDeadline" required />
+        </div>
+        <button type="submit" class="btn-primary">Create Assignment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Submissions Modal -->
+  <div id="submissionsModal" class="modal">
+    <div class="modal-content large">
+      <span class="close-subs">&times;</span>
+      <h3>Student Submissions</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Student Roll</th>
+              <th>Student Name</th>
+              <th>Submitted At</th>
+              <th>Content</th>
+              <th>Grade</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="submissionsBody">
+            <!-- Submissions will load here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grade Modal -->
+  <div id="gradeModal" class="modal">
+    <div class="modal-content">
+      <span class="close-grade">&times;</span>
+      <h3>Grade Submission</h3>
+      <form id="gradeForm">
+        <input type="hidden" id="gradeSubId" />
+        <div class="form-group">
+          <label>Grade</label>
+          <input type="text" id="subGrade" placeholder="e.g. A, 90/100" />
+        </div>
+        <div class="form-group">
+          <label>Feedback</label>
+          <textarea id="subFeedback" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Save Grade</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="../api.js"></script>
+  <script src="assignments.js"></script>
+  <script src="common layout.js"></script>
+</body>
+</html>

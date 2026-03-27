@@ -1,0 +1,9 @@
+Roll,Name,Email,Phone,Course,Year,Semester,Class,Address
+101,Asha Devi,asha.devi@example.com,9876543210,B.Tech CSE,2,3,CSE-A,"Hyderabad, Telangana"
+102,Rohan Das,rohan.das@example.com,9876543211,B.Tech CSE,2,3,CSE-A,"Visakhapatnam, Andhra Pradesh"
+103,Neha Sharma,neha.sharma@example.com,9876543212,B.Tech AI & ML,3,5,AIML-B,"Pune, Maharashtra"
+104,Arjun Kumar,arjun.kumar@example.com,9876543213,B.Tech ECE,1,1,ECE-A,"Bengaluru, Karnataka"
+105,Priya Nair,priya.nair@example.com,9876543214,B.Tech IT,4,7,IT-A,"Kochi, Kerala"
+106,Vikram Singh,vikram.singh@example.com,9876543215,B.Tech Mechanical,3,5,MECH-A,"Jaipur, Rajasthan"
+107,Sana Khan,sana.khan@example.com,9876543216,B.Tech Civil,2,4,CIVIL-B,"Lucknow, Uttar Pradesh"
+108,Rahul Verma,rahul.verma@example.com,9876543217,B.Tech Data Science,1,2,DS-A,"Chennai, Tamil Nadu"

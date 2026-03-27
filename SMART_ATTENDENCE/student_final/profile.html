@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Attendance | Student Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="left-header">
+      <div class="menu-icon"><span>&#9776;</span></div>
+      <h2><span class="red">SMART ATTENDANCE</span></h2>
+    </div>
+
+    <div class="right-header">
+      <span class="welcome">Welcome, <strong id="welcomeName">Student</strong></span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li class="section">Main Menu</li>
+        <li><a href="dashboard.html"><span class="icon">📊</span> <span>Dashboard</span></a></li>
+        <li class="active"><a href="profile.html"><span class="icon">👤</span> <span>My Profile</span></a></li>
+        <li><a href="attendance.html"><span class="icon">📅</span> <span>Attendance</span></a></li>
+        <li><a href="assignments.html"><span class="icon">📝</span> <span>Assignments</span></a></li>
+        <li class="logout"><a href="../logout.html"><span class="icon">🚪</span> <span>Logout</span></a></li>
+      </ul>
+    </aside>
+
+    <main class="content fade-in">
+      <h2 class="page-title">Personal Profile</h2>
+      
+      <section class="card profile-card">
+        <div class="photo-wrapper">
+          <div class="photo">
+            <img
+              id="profilePhoto"
+              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+              alt="Student profile"
+            />
+          </div>
+        </div>
+
+        <div class="details">
+          <h2 id="profileName">Loading...</h2>
+
+          <table>
+            <tr><th>Roll No</th><td id="profileRoll">--</td></tr>
+            <tr><th>Class</th><td id="profileClass">--</td></tr>
+            <tr><th>Course</th><td id="profileCourse">--</td></tr>
+            <tr><th>Year</th><td id="profileYear">--</td></tr>
+            <tr><th>Semester</th><td id="profileSemester">--</td></tr>
+            <tr><th>Email</th><td id="profileEmail">--</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section class="lower">
+        <div class="tabs-nav">
+          <button class="tab-btn active" data-tab="personal">Personal Info</button>
+          <button class="tab-btn" data-tab="academic">Academic History</button>
+          <button class="tab-btn" data-tab="parents">Parents / Guardian</button>
+          <button class="tab-btn" data-tab="extra">Extra Activities</button>
+        </div>
+
+        <div class="tab-contents">
+          <div class="card tab-content active" id="personal">
+            <h3>Personal Information</h3>
+            <div class="info-row"><span>Phone</span><span id="profilePhone">--</span></div>
+            <div class="info-row"><span>Address</span><span id="profileAddress">--</span></div>
+            <div class="info-row"><span>Portal ID</span><span id="profileLoginId">--</span></div>
+            <div class="info-row"><span>Status</span><span id="profileAccess" style="color: var(--success);">Active</span></div>
+          </div>
+
+          <div class="card tab-content" id="academic">
+            <h3>Academic History</h3>
+            <div class="info-row"><span>Course</span><span id="academicCourse">--</span></div>
+            <div class="info-row"><span>Current Year</span><span id="academicYear">--</span></div>
+            <div class="info-row"><span>Semester</span><span id="academicSemester">--</span></div>
+            <div class="info-row"><span>Class Section</span><span id="academicClass">--</span></div>
+          </div>
+
+          <div class="card tab-content" id="parents">
+            <h3>Parent / Guardian</h3>
+            <div class="info-row"><span>Contact Email</span><span id="contactEmail">--</span></div>
+            <div class="info-row"><span>Contact Phone</span><span id="contactPhone">--</span></div>
+            <div class="info-row"><span>Address</span><span id="contactAddress">--</span></div>
+          </div>
+
+          <div class="card tab-content" id="extra">
+            <h3>Extra Activities</h3>
+            <p style="color: var(--text-muted); padding: 20px 0;">Clubs, sports, and activity records are managed by the faculty office.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../api.js"></script>
+  <script src="script2.js"></script>
+</body>
+</html>

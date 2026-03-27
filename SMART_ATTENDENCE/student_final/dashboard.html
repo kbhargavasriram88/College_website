@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Attendance | Student Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="left-header">
+      <div class="menu-icon"><span>&#9776;</span></div>
+      <h2><span class="red">SMART ATTENDANCE</span></h2>
+    </div>
+
+    <div class="right-header">
+      <span class="welcome">Welcome, <strong id="welcomeName">Student</strong></span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li class="section">Main Menu</li>
+        <li class="active"><a href="dashboard.html"><span class="icon">📊</span> <span>Dashboard</span></a></li>
+        <li><a href="profile.html"><span class="icon">👤</span> <span>My Profile</span></a></li>
+        <li><a href="attendance.html"><span class="icon">📅</span> <span>Attendance</span></a></li>
+        <li><a href="assignments.html"><span class="icon">📝</span> <span>Assignments</span></a></li>
+        <li class="logout"><a href="../logout.html"><span class="icon">🚪</span> <span>Logout</span></a></li>
+      </ul>
+    </aside>
+
+    <main class="content fade-in">
+      <h2 class="page-title">Dashboard Overview</h2>
+
+      <div class="stats-grid">
+        <div class="card stat-card">
+          <div class="stat-icon">📈</div>
+          <div class="stat-info">
+            <h4>Overall Attendance</h4>
+            <div class="value" id="statAttendance">-- %</div>
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-info">
+            <h4>Days Present</h4>
+            <div class="value" id="statPresent">--</div>
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-info">
+            <h4>Total Sessions</h4>
+            <div class="value" id="statTotal">--</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lower">
+        <div class="tab-contents">
+          <div class="card mb-2" id="punchCard">
+            <h3>Daily Attendance Unlock</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+              <div>
+                <p id="punchStatus" style="margin-bottom: 5px; font-weight: 600; color: var(--danger);">🔴 Identity Not Verified Today</p>
+                <p style="font-size: 13px; color: var(--text-muted);">Please perform a face scan to unlock teacher attendance marking.</p>
+              </div>
+              <button id="punchBtn" class="primary-btn" style="min-width: 150px;">Verify Identity</button>
+            </div>
+          </div>
+
+          <div class="card mb-2">
+            <h3>Quick Actions</h3>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+              <a href="attendance.html" class="primary-btn">View Full Report</a>
+              <a href="profile.html" class="primary-btn" style="background: var(--bg-body); color: var(--text-main);">Update Profile</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Recent Activity</h3>
+            <div id="recentActivityList">
+              <p style="color: var(--text-muted); font-style: italic;">Loading recent records...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs-nav" style="width: 350px;">
+          <div class="card" style="width: 100%;">
+            <h3>Attendance Health</h3>
+            <div style="margin: 20px 0;">
+              <div style="height: 10px; background: #eee; border-radius: 5px; overflow: hidden;">
+                <div id="attendanceProgress" style="height: 100%; width: 0%; background: var(--success); transition: width 1s ease;"></div>
+              </div>
+              <p id="healthMessage" style="font-size: 14px; margin-top: 10px; color: var(--text-muted);">
+                Calculating your attendance standing...
+              </p>
+            </div>
+            <div class="info-row">
+              <span>Required</span>
+              <span>75.0%</span>
+            </div>
+            <div class="info-row">
+              <span>Status</span>
+              <span id="attendanceStatusLabel">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Camera Modal -->
+  <div id="cameraModal" class="modal">
+    <div class="modal-content camera-box">
+      <div class="modal-header">
+        <h3>Verify Identity</h3>
+        <button class="close-modal" id="closeModal">&times;</button>
+      </div>
+      <div class="camera-body">
+        <video id="cameraPreview" autoplay playsinline muted></video>
+        <div class="scan-overlay">
+          <div class="scan-line"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="captureBtn" class="primary-btn">Verify Now</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .camera-box {
+      width: 90%;
+      max-width: 500px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal.show .camera-box {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--bg-body);
+    }
+
+    .modal-header h3 {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .close-modal:hover {
+      color: var(--danger);
+    }
+
+    .camera-body {
+      position: relative;
+      background: #000;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    #cameraPreview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .scan-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      border: 40px solid rgba(0, 0, 0, 0.3);
+      box-sizing: border-box;
+    }
+
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+      animation: scan 3s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
+
+    .modal-footer {
+      padding: 20px;
+      text-align: center;
+    }
+
+    #captureBtn {
+      width: 100%;
+    }
+  </style>
+
+  <script src="../api.js"></script>
+  <script src="script2.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Data will be populated by script2.js or inline for dashboard specific logic
+      try {
+        const attendance = await AttendanceApi.listAttendance();
+        const roll = (await AttendanceApi.getSession()).studentRoll;
+        const myAttendance = attendance.filter(r => r.roll === roll);
+        
+        const total = myAttendance.length;
+        const present = myAttendance.filter(r => r.status === 'P').length;
+        const percent = total > 0 ? ((present / total) * 100).toFixed(1) : 0;
+
+        document.getElementById('statAttendance').textContent = `${percent}%`;
+        document.getElementById('statPresent').textContent = present;
+        document.getElementById('statTotal').textContent = total;
+        
+        const progress = document.getElementById('attendanceProgress');
+        progress.style.width = `${percent}%`;
+        progress.style.background = percent >= 75 ? 'var(--success)' : (percent >= 60 ? 'var(--warning)' : 'var(--danger)');
+
+        const statusLabel = document.getElementById('attendanceStatusLabel');
+        statusLabel.textContent = percent >= 75 ? 'Good' : (percent >= 60 ? 'Warning' : 'Low');
+        statusLabel.style.color = percent >= 75 ? 'var(--success)' : (percent >= 60 ? 'var(--warning)' : 'var(--danger)');
+
+        const healthMsg = document.getElementById('healthMessage');
+        if (percent >= 75) {
+          healthMsg.textContent = "Great! Your attendance is above the required threshold.";
+        } else {
+          healthMsg.textContent = "Warning: Your attendance is below the 75% requirement.";
+        }
+
+        const activityList = document.getElementById('recentActivityList');
+        if (myAttendance.length === 0) {
+          activityList.innerHTML = '<p>No recent attendance records found.</p>';
+        } else {
+          const recent = myAttendance.sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+          activityList.innerHTML = recent.map(r => `
+            <div class="info-row">
+              <div style="display: flex; flex-direction: column;">
+                <span style="font-weight: 600;">${r.subject}</span>
+                <span style="font-size: 12px; color: var(--text-muted);">${r.date}</span>
+              </div>
+              <span class="face-badge ${r.status === 'P' ? 'success' : 'error'}">${r.status === 'P' ? 'Present' : 'Absent'}</span>
+            </div>
+          `).join('');
+        }
+
+        // Face Punch Logic
+        const punchStatus = document.getElementById("punchStatus");
+        const punchBtn = document.getElementById("punchBtn");
+        const cameraModal = document.getElementById("cameraModal");
+        const closeModal = document.getElementById("closeModal");
+        const cameraPreview = document.getElementById("cameraPreview");
+        const captureBtn = document.getElementById("captureBtn");
+        let mediaStream = null;
+
+        async function checkPunchStatus() {
+          try {
+            const today = new Date().toISOString().split("T")[0];
+            const data = await AttendanceApi.listPunches({ date: today });
+            const session = await AttendanceApi.getSession();
+            const myRoll = session.studentRoll;
+
+            if (data.punches && data.punches[myRoll]) {
+              punchStatus.innerHTML = `🟢 Punched In at ${data.punches[myRoll]}`;
+              punchStatus.style.color = "var(--success)";
+              punchBtn.disabled = true;
+              punchBtn.textContent = "Identity Verified";
+              punchBtn.style.opacity = "0.7";
+            }
+          } catch (e) {
+            console.error("Punch status check failed:", e);
+          }
+        }
+
+        checkPunchStatus();
+
+        async function startCamera() {
+          try {
+            mediaStream = await navigator.mediaDevices.getUserMedia({
+              video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } },
+            });
+            cameraPreview.srcObject = mediaStream;
+            cameraModal.classList.add("show");
+            captureBtn.disabled = false;
+            captureBtn.textContent = "Verify Now";
+          } catch (err) {
+            alert("Camera access denied or unavailable: " + err.message);
+          }
+        }
+
+        function stopCamera() {
+          if (mediaStream) {
+            mediaStream.getTracks().forEach((track) => track.stop());
+            mediaStream = null;
+          }
+          cameraModal.classList.remove("show");
+        }
+
+        punchBtn.addEventListener("click", startCamera);
+        closeModal.addEventListener("click", stopCamera);
+
+        captureBtn.addEventListener("click", async () => {
+          captureBtn.disabled = true;
+          captureBtn.textContent = "Verifying...";
+
+          try {
+            const canvas = document.createElement("canvas");
+            canvas.width = cameraPreview.videoWidth;
+            canvas.height = cameraPreview.videoHeight;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(cameraPreview, 0, 0);
+            const imageData = canvas.toDataURL("image/jpeg", 0.9);
+
+            const res = await AttendanceApi.punchIn(imageData);
+            if (res.status === "success") {
+              alert(res.message);
+              stopCamera();
+              checkPunchStatus();
+            } else {
+              alert(res.message || "Face recognition failed.");
+              captureBtn.disabled = false;
+              captureBtn.textContent = "Verify Now";
+            }
+          } catch (err) {
+            alert(err.message || "An error occurred during verification.");
+            captureBtn.disabled = false;
+            captureBtn.textContent = "Verify Now";
+          }
+        });
+      } catch (error) {
+        console.error("Dashboard error:", error);
+      }
+    });
+  </script>
+</body>
+</html>

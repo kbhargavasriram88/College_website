@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Logout Confirmation | Smart Attendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="logout.css">
+</head>
+<body>
+
+<div class="logout-wrapper">
+  <div class="logout-card">
+    <div class="icon">🚪</div>
+
+    <h2>Ready to leave?</h2>
+    <p id="logoutCopy">Confirm if you want to end your current session on this browser.</p>
+
+    <div class="buttons">
+      <button class="logout-btn" id="logoutBtn">Yes, Log Me Out</button>
+      <button class="cancel-btn" id="cancelBtn">Stay Signed In</button>
+    </div>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const cancelBtn = document.getElementById("cancelBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const logoutCopy = document.getElementById("logoutCopy");
+    let currentSession = null;
+
+    try {
+      currentSession = await AttendanceApi.getSession();
+      logoutCopy.textContent = `You are currently signed in as ${currentSession.name || currentSession.username}. Signing out will end your access.`;
+    } catch (error) {
+      logoutCopy.textContent = "No active session was found. You can return to login safely.";
+    }
+
+    cancelBtn.addEventListener("click", () => {
+      if (currentSession) {
+        window.location.href = currentSession.dashboard;
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      logoutBtn.disabled = true;
+      logoutBtn.textContent = "Signing Out...";
+      try {
+        await AttendanceApi.logout();
+      } finally {
+        window.location.href = "/login.html";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

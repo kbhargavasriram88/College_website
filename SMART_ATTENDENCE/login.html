@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Management System | Secure Login</title>
+  <link rel="stylesheet" href="login.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="login-wrapper">
+
+  <!-- LEFT SIDE: BRANDING -->
+  <div class="login-left">
+    <h1>Smart<br>Attendance<br>Portal</h1>
+    <p>
+      An intelligent ecosystem to manage student attendance, 
+      academic progression, and institutional reports with ease.
+    </p>
+  </div>
+
+  <!-- RIGHT SIDE: AUTH FORM -->
+  <div class="login-right">
+    <h2>Welcome Back</h2>
+    <p class="sub">Sign in to access your dashboard</p>
+
+    <form id="loginForm">
+
+      <label>Access Role</label>
+      <div class="roles">
+        <label>
+          <input type="radio" name="role" value="teacher" checked required>
+          <div class="role-chip">
+            <span class="icon">🏠</span>
+            <span>Faculty</span>
+          </div>
+        </label>
+        <label>
+          <input type="radio" name="role" value="student" required>
+          <div class="role-chip">
+            <span class="icon">🎓</span>
+            <span>Student</span>
+          </div>
+        </label>
+      </div>
+
+      <label>Account ID</label>
+      <input type="text" id="username" placeholder="Username or Roll Number" required>
+
+      <label>Password</label>
+      <input type="password" id="password" placeholder="••••••••" required>
+
+      <div class="options">
+        <span style="display: flex; align-items: center; gap: 5px;">
+           <input type="checkbox" checked disabled> Secure Session
+        </span>
+        <a href="forgot-password.html">Forgot Password?</a>
+      </div>
+
+      <button type="submit" id="submitBtn">Sign In</button>
+
+      <div id="error"></div>
+
+      <div class="login-help" id="loginHelp">
+        Faculty use their assigned portal accounts. Students enter their roll number and password.
+      </div>
+
+    </form>
+
+    <p class="footer-text">
+      &copy; 2026 Smart Attendance System. Securely Encrypted.
+    </p>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+  const form = document.getElementById("loginForm");
+  const errorElement = document.getElementById("error");
+  const loginHelp = document.getElementById("loginHelp");
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  const roleInputs = document.querySelectorAll('input[name="role"]');
+  const submitButton = document.getElementById("submitBtn");
+
+  updateRoleHints();
+  roleInputs.forEach(input => input.addEventListener("change", updateRoleHints));
+
+  // Redirect if already logged in
+  try {
+    const currentSession = await AttendanceApi.getSession();
+    window.location.href = currentSession.dashboard;
+    return;
+  } catch (error) {
+    AttendanceApi.clearLegacySessionHints();
+  }
+
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    errorElement.textContent = "";
+    submitButton.disabled = true;
+    submitButton.textContent = "Authenticating...";
+
+    const roleElement = document.querySelector('input[name="role"]:checked');
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    if (!roleElement) {
+      errorElement.textContent = "Please select an access role.";
+      resetButton();
+      return;
+    }
+
+    try {
+      const account = await AttendanceApi.login({
+        role: roleElement.value,
+        username,
+        password
+      });
+
+      window.location.href = account.dashboard;
+    } catch (error) {
+      errorElement.textContent = error.message;
+      resetButton();
+    }
+  });
+
+  function resetButton() {
+    submitButton.disabled = false;
+    submitButton.textContent = "Sign In";
+  }
+
+  function updateRoleHints() {
+    const selectedRole = document.querySelector('input[name="role"]:checked')?.value || "teacher";
+
+    if (selectedRole === "student") {
+      usernameInput.placeholder = "Roll Number or Email";
+      passwordInput.placeholder = "Student Password";
+      loginHelp.textContent =
+        "Students login with their unique roll number. Default password is your roll number if not changed.";
+    } else {
+      usernameInput.placeholder = "Faculty Username";
+      passwordInput.placeholder = "Faculty Password";
+      loginHelp.textContent =
+        "Faculty members use their institutional portal credentials to manage classes and records.";
+    }
+  }
+});
+</script>
+
+</body>
+</html>
