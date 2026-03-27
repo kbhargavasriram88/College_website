@@ -33,6 +33,3 @@ This project is configured for **Render.com** and **Railway.app** via the includ
 - **Database**: SQLite3 (Local, lightweight, relational).
 - **Computer Vision**: OpenCV, Face-Recognition (dlib).
 
----
-**Developed for University Presentation Marks: 10/10 🏅**
-Member 1: [Name] | Member 2: [Name] | Member 3: [Name]
